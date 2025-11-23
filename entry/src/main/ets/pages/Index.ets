@@ -28,11 +28,9 @@ struct SimpleConnectionApp {
   // Setup socket listeners
   private setupSocketListeners(): void {
     this.tcp.on('message', (value: SocketInfo) => {
-      console.log("Message received");
     });
 
     this.tcp.on('connect', () => {
-      console.log("Connection established");
       this.isConnected = true;
       this.isConnecting = false;
       this.statusMessage = 'Connected Successfully! ✓';
@@ -40,14 +38,12 @@ struct SimpleConnectionApp {
     });
 
     this.tcp.on('close', () => {
-      console.log("Connection closed");
       this.isConnected = false;
       this.isConnecting = false;
       this.statusMessage = 'Connection Lost';
     });
 
     this.tcp.on('error', (err: BusinessError) => {
-      console.error("Socket error: " + JSON.stringify(err));
       this.isConnecting = false;
       this.statusMessage = 'Connection Error!';
       promptAction.showToast({ message: 'Connection error: ' + err.code, duration: 2000 });
@@ -72,12 +68,9 @@ struct SimpleConnectionApp {
 
       this.tcp.bind(localAddress, (err: BusinessError) => {
         if (err) {
-          console.error('Bind error: ' + JSON.stringify(err));
           this.statusMessage = 'Bind error';
           //return;
         }
-        console.log('Bind successful');
-
         // Connect to remote computer
         let remoteAddress: socket.NetAddress = {
           address: this.remoteIP,
@@ -90,18 +83,15 @@ struct SimpleConnectionApp {
         };
 
         this.tcp.connect(connectOptions).then(() => {
-          console.log('Connection successful');
           this.isConnected = true;
           this.statusMessage = 'Connected! ✓';
         }).catch((err: BusinessError) => {
-          console.error('Connection error: ' + JSON.stringify(err));
           this.statusMessage = 'Connection Error!';
           promptAction.showToast({ message: 'Connection Error', duration: 2000 });
         });
       });
 
     } catch (error) {
-      console.error("Socket error: " + JSON.stringify(error));
       this.statusMessage = 'Socket Error';
     }
   }
@@ -109,11 +99,9 @@ struct SimpleConnectionApp {
   // Close connection
   private closeConnection(): void {
     this.tcp.close().then(() => {
-      console.log('Connection closed');
       this.isConnected = false;
       this.statusMessage = 'Connection Lost';
     }).catch((err: BusinessError) => {
-      console.error('Close error: ' + JSON.stringify(err));
     });
   }
 
@@ -135,7 +123,7 @@ struct SimpleConnectionApp {
           this.isConnecting ? Color.Yellow : Color.White)
 
       // IP input
-      TextInput({ placeholder: '192.168.1.100' })
+      TextInput({ placeholder: 'IP Address...' })
         .width('80%')
         .height(50)
         .backgroundColor(Color.Black)
