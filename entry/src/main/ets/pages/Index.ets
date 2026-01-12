@@ -34,7 +34,7 @@ struct SimpleConnectionApp {
       this.isConnected = true;
       this.isConnecting = false;
       this.statusMessage = 'Connected Successfully! ✓';
-      promptAction.showToast({ message: 'Connected!', duration: 1000 });
+      promptAction.openToast({ message: 'Connected!', duration: 1000 });
     });
 
     this.tcp.on('close', () => {
@@ -46,13 +46,13 @@ struct SimpleConnectionApp {
     this.tcp.on('error', (err: BusinessError) => {
       this.isConnecting = false;
       this.statusMessage = 'Connection Error!';
-      promptAction.showToast({ message: 'Connection error: ' + err.code, duration: 2000 });
+      promptAction.openToast({ message: `${err.code}`, duration: 2000 });
     });
   }
 
   private connectToPC(): void {
     if (!this.ipAddress) {
-      promptAction.showToast({ message: 'Please enter the IP Address', duration: 1000 });
+      promptAction.openToast({ message: 'Please enter the IP Address', duration: 1000 });
       return;
     }
 
@@ -62,7 +62,7 @@ struct SimpleConnectionApp {
     try {
       // Bind local connection
       let localAddress: socket.NetAddress = {
-        address: '0.0.0.0', // All network interfaces
+        address: 'x.x.x.x', // All network interfaces, use real IP
         port: 0 // System will assign port automatically
       };
 
@@ -87,7 +87,7 @@ struct SimpleConnectionApp {
           this.statusMessage = 'Connected! ✓';
         }).catch((err: BusinessError) => {
           this.statusMessage = 'Connection Error!';
-          promptAction.showToast({ message: 'Connection Error', duration: 2000 });
+          promptAction.openToast({ message: 'Connection Error', duration: 2000 });
         });
       });
 
@@ -109,7 +109,7 @@ struct SimpleConnectionApp {
     this.closeConnection();
     this.isConnected = false;
     this.statusMessage = 'Disconnected';
-    promptAction.showToast({ message: 'Disconnected', duration: 1000 });
+    promptAction.openToast({ message: 'Disconnected', duration: 1000 });
   }
 
   build() {

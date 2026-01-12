@@ -17,9 +17,7 @@ TCP Connection is a codelab project that developed to show how to provide TCP So
 
 1. Users can enter the IP address of other device which is desired as to be connect device.
 
-# Technology
-
-## Tech Stack
+# Tech Stack
 
 - **Languages**: ArkTS, ArkUI
 - **Frameworks**: HarmonyOS 5.1.0(18)
@@ -54,7 +52,7 @@ entry/src/main/ets/
 
 ## Limitations
 
-- Air mouse is not working on previewer
+- The application is not working on previewer.
 - Each devices must be connected in same network
 
 # License
